@@ -23,7 +23,7 @@
         "../node_modules/admin-lte/dist/css/AdminLte.min.css",
         "../node_modules/admin-lte/dist/css/skins/skin-blue.min.css",
         "../node_modules/font-awesome/css/font-awesome.css",
-        "styles.css"
+        "./assets/styles/main.scss"
       ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",
@@ -55,7 +55,7 @@
     }
   },
   "defaults": {
-    "styleExt": "css",
+    "styleExt": "scss",
     "component": {}
   }
 }
