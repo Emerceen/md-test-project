@@ -22,6 +22,7 @@
         "../node_modules/admin-lte/bootstrap/css/bootstrap.min.css",
         "../node_modules/admin-lte/dist/css/AdminLte.min.css",
         "../node_modules/admin-lte/dist/css/skins/skin-blue.min.css",
+        "../node_modules/font-awesome/css/font-awesome.css",
         "styles.css"
       ],
       "scripts": [],
