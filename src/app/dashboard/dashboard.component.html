@@ -1,0 +1,46 @@
+<div class="hold-transition skin-blue sidebar-mini fixed">
+	<div class="wrapper">
+		<header class="main-header">
+			<a href="#" class="logo">
+				<span class="logo-mini">
+					<b>
+						M
+					</b>
+					D
+				</span>
+				<span class="logo-lg">
+					<b>
+						MD
+					</b>
+					test
+				</span>
+			</a>
+			<nav class="navbar navbar-static-top" role="navigation">
+				<a href="#" class="sidebar-toggle" (click)="sidebarToggle($event)">
+					<span class="sr-only">
+						Nawigacja
+					</span>
+				</a>
+			</nav>
+		</header>
+		<aside class="main-sidebar">
+			<section class="sidebar">
+				<ul class="sidebar-menu">
+					<li class="header">
+						Menu
+					</li>
+				</ul>
+			</section>
+		</aside>
+		<div class="content-wrapper">
+			<router-outlet>
+
+			</router-outlet>
+		</div>
+		<footer class="main-footer">
+				<strong>
+					Copyright &copy; {{ year }} Marcin Dedio
+				</strong>
+		</footer>
+	</div>
+</div>
