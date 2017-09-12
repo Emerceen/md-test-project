@@ -1,7 +1,7 @@
-<div class="hold-transition skin-blue sidebar-mini fixed">
+<div class="hold-transition skin-blue sidebar-mini fixed" [ngClass]="{'sidebar-collapse': sidebarCollapse, 'sidebar-open': sidebarOpen}">
 	<div class="wrapper">
 		<header class="main-header">
-			<a href="#" class="logo">
+			<a href="#" class="logo" (click)="blindLink($event)">
 				<span class="logo-mini">
 					<b>
 						M
