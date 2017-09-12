@@ -57,8 +57,7 @@
     "no-empty-interface": true,
     "no-eval": true,
     "no-inferrable-types": [
-      true,
-      "ignore-params"
+      false
     ],
     "no-misused-new": true,
     "no-non-null-assertion": true,
@@ -103,6 +102,7 @@
         "variable-declaration": "nospace"
       }
     ],
+    "typedef": [true, "call-signature", "parameter", "member-variable-declaration"],
     "typeof-compare": true,
     "unified-signatures": true,
     "variable-name": false,
