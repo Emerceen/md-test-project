@@ -6,6 +6,7 @@ import { routing } from './app.routing';
 import { AppComponent } from './app.component';
 import { DashboardModule } from './dashboard/index';
 import { UsersModule } from './users/index';
+import { UsersListModule } from './users/users-list/index';
 import { WindowRefService } from './services/window.service';
 import { UsersDataService } from './data-services/users.service';
 import { DistanceDataService } from './data-services/distance.service';
@@ -19,6 +20,7 @@ import { DistanceDataService } from './data-services/distance.service';
     routing,
     DashboardModule,
     UsersModule,
+    UsersListModule,
     HttpClientModule
   ],
   providers: [

@@ -11,7 +11,7 @@ import { User } from './../entities/user';
 export class UsersComponent {
   public user: User;
   public numberOfFollowersUser: number = 10;
-  public listOf10User: Array<User>;
+  public listOf10Users: Array<User>;
 
   private _followersOfUser: Array<User>;
   private alive: boolean = true;
@@ -43,7 +43,7 @@ export class UsersComponent {
               locations => {
                 followerUser.distanceToFollowingUser = locations.distance;
                 if (this.checkIfThisIsLastElementOfArray(length, index)) {
-                  this.listOf10User = this.get10UsersWithTheHighestDistances();
+                  this.listOf10Users = this.get10UsersWithTheHighestDistances();
                 }
               }
             );
