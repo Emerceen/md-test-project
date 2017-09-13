@@ -29,6 +29,16 @@
 					<li class="header">
 						Menu
 					</li>
+					<li (click)="mobileSidebarClose($event)" [routerLinkActive]="['active']">
+						<a [routerLink]="['users']">
+							<i class="fa fa-users">
+
+							</i>
+							<span>
+								Użytkownicy GitHub
+							</span>
+						</a>
+					</li>
 				</ul>
 			</section>
 		</aside>
