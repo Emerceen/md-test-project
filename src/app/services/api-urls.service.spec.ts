@@ -1,6 +1,6 @@
 import { ApiURLs } from './api-urls.service';
 
-describe('Remote.url', () => {
+describe('ApiUrls', () => {
   const apiURLs = new ApiURLs(
     {
       apiGitHubEndpoint: 'http://GitHub/',
@@ -9,7 +9,7 @@ describe('Remote.url', () => {
   );
   it('should return url for GitHub', () => {
     const response = apiURLs.getGitHubURL('test');
-    expect(response).toBe('http://GitHub//test');
+    expect(response).toBe('http://GitHub/test');
   });
 
   it('should return url for Dystans', () => {

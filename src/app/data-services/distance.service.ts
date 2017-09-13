@@ -18,8 +18,8 @@ export class DistanceDataService {
   ) { }
 
   getDistanceBetweenLocations(location1: string, location2: string): Observable<Locations> {
-    const reqURL = `/route.json?stops=${location1}|${location2}`;
-    const url = this.apiURLs.getGitHubURL(reqURL);
+    const reqURL = `?stops=${location1}|${location2}`;
+    const url = this.apiURLs.getDystansURL(reqURL);
 
     return this.httpClient.get<LocationsInterface>(url)
       .map(location => Locations.fromData(location));

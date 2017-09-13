@@ -14,6 +14,8 @@ import { User } from './../../entities/user';
 export class UserInputComponent implements OnInit {
   public userForm: FormGroup;
 
+  @Input() public loadingList: boolean;
+  @Output() loadingListChange: EventEmitter<boolean> = new EventEmitter();
   @Input() public user: User;
   @Output() userChange: EventEmitter<User> = new EventEmitter();
   @Input() public followersOfUser: Array<User>;
@@ -39,6 +41,7 @@ export class UserInputComponent implements OnInit {
 
   submitUserForm(event: Event): void {
     event.preventDefault();
+    this.emitLoadingList(true);
     this.reactiveFormsHelperService.markFormGroupDirty(this.userForm);
     if (this.userForm.valid) {
       this.communication.userDataService.getUserDetails(this.userForm.controls.name.value)
@@ -46,8 +49,8 @@ export class UserInputComponent implements OnInit {
       .subscribe(
         user => {
           this.user = user;
-          this.getFollowersOfUser(user.login);
-          this.emitUser(user);
+          this.getFollowersOfUser(this.user.login);
+          this.emitUser(this.user);
         }
       );
     }
@@ -70,5 +73,9 @@ export class UserInputComponent implements OnInit {
 
   emitFollowersOfUser(users: Array<User>): void {
     this.followersOfUserChange.emit(users);
+  }
+
+  emitLoadingList(value: boolean): void {
+    this.loadingListChange.emit(value);
   }
 }

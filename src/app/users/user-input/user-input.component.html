@@ -16,8 +16,8 @@
   </div>
   <div class="box-footer">
     <button type="submit" class="btn btn-info pull-right" (click)="submitUserForm($event)" [ngClass]="{'disabled': userForm.invalid}">
-      <span *ngIf="!userFormLoading">Wyślij</span>
-      <i *ngIf="userFormLoading" class="fa fa-circle-o-notch fa-spin fa-fw"></i>
+      <span *ngIf="!loadingList">Wyślij</span>
+      <i *ngIf="loadingList" class="fa fa-circle-o-notch fa-spin fa-fw"></i>
     </button>
   </div>
 </div>

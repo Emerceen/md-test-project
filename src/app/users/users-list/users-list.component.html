@@ -1,6 +1,6 @@
-<div class="box">
+<div class="box" *ngIf="listOfUsersWithHighestDistances && !loadingList">
   <div class="box-header">
-    <h3 class="box-title">Lista 10 użytkowników z największym dystansem między miejscem zamieszkania obserwowanego użytkownika</h3>
+    <h3 class="box-title">Lista użytkowników z największym dystansem między miejscem zamieszkania obserwowanego użytkownika</h3>
   </div>
   <div class="box-body">
     <div class="box">
@@ -8,20 +8,23 @@
         <table class="table table-striped">
           <tbody>
             <tr>
-              <th style="width: 10px">#</th>
-              <th>Dane</th>
+              <th>Login</th>
               <th>Miejsce zamieszkania</th>
               <th>Dystans</th>
             </tr>
-            <tr *ngFor="let user of listOf10Users; let i = index">
-              <td>{{ i }}</td>
-              <td>{{ user.name }}</td>
+            <ng-container *ngFor="let user of listOfUsersWithHighestDistances">
+            <tr *ngIf="user.distanceToFollowingUser">
+              <td>{{ user.login }}</td>
               <td>{{ user.location }}</td>
               <td>{{ user.distanceToFollowingUser }}</td>
             </tr>
+          </ng-container>
           </tbody>
         </table>
       </div>
     </div>
   </div>
+</div>
+<div class="center-loader" *ngIf="loadingList">
+  <i class="fa fa-circle-o-notch fa-spin fa-fw"></i>
 </div>

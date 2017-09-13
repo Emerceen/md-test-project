@@ -6,5 +6,5 @@ export let APP_CONFIG = new OpaqueToken('app.conf');
 
 export const AppConfig: AppConfigInterface = {
   apiGitHubEndpoint: 'https://api.github.com/users/',
-  apiDystansEndpoint: `www.dystans.org/route.json`
+  apiDystansEndpoint: `http://www.dystans.org/route.json`
 };
