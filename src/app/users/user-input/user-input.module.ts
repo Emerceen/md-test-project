@@ -2,23 +2,21 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 
-import { UsersComponent } from './users.component';
-import { UserInputModule } from './user-input/index';
+import { UserInputComponent } from './user-input.component';
 
 @NgModule({
   imports: [
     RouterModule,
-    BrowserModule,
-    UserInputModule
+    BrowserModule
   ],
   exports: [
-    UsersComponent
+    UserInputComponent
   ],
   declarations: [
-    UsersComponent
+    UserInputComponent
   ]
 })
 
-export class UsersModule {
+export class UserInputModule {
 
 }
