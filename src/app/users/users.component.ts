@@ -1,7 +1,7 @@
-import { Communication } from './../data-services/communication.service';
 import { Component } from '@angular/core';
 import 'rxjs/add/operator/takeWhile';
 
+import { Communication } from './../data-services/communication.service';
 import { User } from './../entities/user';
 
 @Component({
@@ -12,7 +12,7 @@ import { User } from './../entities/user';
 export class UsersComponent {
   public user: User;
   public numberOfFollowersUser: number = 10;
-  public listOf10User: Array<User>;
+  public listOf10Users: Array<User>;
 
   private _followersOfUser: Array<User>;
   private alive: boolean = true;
@@ -33,23 +33,23 @@ export class UsersComponent {
     const length = this._followersOfUser.length;
     this._followersOfUser.map(
       (followerUser, index) => {
-        this.communication.userDataService.getUserDetails(followerUser.login)
-        .takeWhile(() => this.alive)
-        .subscribe(
-          user => {
-            followerUser.location = user.location.split(/'/)[0];
-            this.communication.distanceDataService.getDistanceBetweenLocations(this.user.location, user.location)
+        // this.communication.userDataService.getUserDetails(followerUser.login)
+        // .takeWhile(() => this.alive)
+        // .subscribe(
+        //   user => {
+        //     followerUser.location = user.location.split(/'/)[0];
+            this.communication.distanceDataService.getDistanceBetweenLocations(this.user.location, followerUser.location)
             .takeWhile(() => this.alive)
             .subscribe(
               locations => {
-                user.distanceToFollowingUser = locations.distance;
+                followerUser.distanceToFollowingUser = locations.distance;
                 if (this.checkIfThisIsLastElementOfArray(length, index)) {
-                  this.listOf10User = this.get10UsersWithTheHighestDistances();
+                  this.listOf10Users = this.get10UsersWithTheHighestDistances();
                 }
               }
             );
-          }
-        );
+      //     }
+      //   );
       }
     );
   }
@@ -59,8 +59,8 @@ export class UsersComponent {
   }
 
   get10UsersWithTheHighestDistances(): Array<User> {
-    return this._followersOfUser.sort(
-      (user1, user2) => user2.distanceToFollowingUser - user1.distanceToFollowingUser
+    return this._followersOfUser.sort((user1, user2) =>
+      user2.distanceToFollowingUser.valueOf() - user1.distanceToFollowingUser.valueOf()
     ).slice(0, this.numberOfFollowersUser);
   }
 }
