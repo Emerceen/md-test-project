@@ -5,8 +5,14 @@
   </h1>
 </section>
 <section class="content">
-  <app-user-input></app-user-input>
-  <app-users-list
-    [listOf10Users]="listOf10Users"
-  ></app-users-list>
+
+  <app-user-input 
+    [(user)]="user" 
+    [(followersOfUser)]="followersOfUser"
+    [(loadingList)]="loadingList">
+  </app-user-input>
+  <app-users-list 
+    [listOfUsersWithHighestDistances]="listOfUsersWithHighestDistances"
+    [loadingList]="loadingList">
+  </app-users-list>
 </section>

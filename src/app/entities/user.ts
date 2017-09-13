@@ -9,7 +9,11 @@ export interface UserInterface {
 
 export class User {
   static fromData(data: UserInterface): User {
-    return new User(data.id, data.name, data.location, data.followers_url, data.url, data.login);
+    if (data.location) {
+      return new User(data.id, data.name, data.location.split(/,/)[0], data.followers_url, data.url, data.login);
+    } else {
+      return new User(data.id, data.name, undefined, data.followers_url, data.url, data.login);
+    }
   }
 
   constructor(

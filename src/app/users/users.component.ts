@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import 'rxjs/add/operator/takeWhile';
 
 import { Communication } from './../data-services/communication.service';
 import { User } from './../entities/user';
@@ -11,14 +12,20 @@ import { User } from './../entities/user';
 export class UsersComponent {
   public user: User;
   public numberOfFollowersUser: number = 10;
-  public listOf10Users: Array<User>;
+  public listOfUsersWithHighestDistances: Array<User>;
+  public loadingList: boolean;
+  private usersIds: Array<number>;
 
   private _followersOfUser: Array<User>;
   private alive: boolean = true;
 
   set followersOfUser(followersOfUser: Array<User>) {
     this._followersOfUser = followersOfUser;
-    this.getLocationOfFollowers();
+    if (this.user.location) {
+      this.getLocationOfFollowers();
+    } else {
+      this.loadingList = false;
+    }
   }
   get followersOfUser(): Array<User> {
     return this._followersOfUser;
@@ -29,37 +36,45 @@ export class UsersComponent {
   ) { }
 
   getLocationOfFollowers(): void {
+    this.usersIds = [];
     const length = this._followersOfUser.length;
-    this._followersOfUser.map(
-      (followerUser, index) => {
-        // this.communication.userDataService.getUserDetails(followerUser.login)
-        // .takeWhile(() => this.alive)
-        // .subscribe(
-        //   user => {
-        //     followerUser.location = user.location.split(/'/)[0];
-            this.communication.distanceDataService.getDistanceBetweenLocations(this.user.location, followerUser.location)
+    if (this._followersOfUser.length > 0) {
+      this._followersOfUser.map(
+        (followerUser, index) => {
+          this.communication.userDataService.getUserDetails(followerUser.login)
             .takeWhile(() => this.alive)
             .subscribe(
-              locations => {
-                followerUser.distanceToFollowingUser = locations.distance;
-                if (this.checkIfThisIsLastElementOfArray(length, index)) {
-                  this.listOf10Users = this.get10UsersWithTheHighestDistances();
-                }
+            user => {
+              followerUser.location = user.location;
+              if (followerUser.location) {
+                this.communication.distanceDataService.getDistanceBetweenLocations(this.user.location, followerUser.location)
+                  .takeWhile(() => this.alive)
+                  .subscribe(
+                  locations => {
+                    followerUser.distanceToFollowingUser = locations.distance;
+                    this.usersIds.push(user.id);
+                    if (this.usersIds.length === length) {
+                        this.getUsersWithTheHighestDistances();
+                    }
+                  }
+                  );
+              } else {
+                this.usersIds.push(user.id);
+                this.loadingList = false;
               }
+            }
             );
-      //     }
-      //   );
-      }
-    );
+        }
+      );
+    } else {
+      this.loadingList = false;
+    }
   }
 
-  private checkIfThisIsLastElementOfArray(arrayLength: number, index: number): boolean {
-    return arrayLength === index + 1 ? true : false;
-  }
-
-  get10UsersWithTheHighestDistances(): Array<User> {
-    return this._followersOfUser.sort((user1, user2) =>
-      user2.distanceToFollowingUser.valueOf() - user1.distanceToFollowingUser.valueOf()
+  getUsersWithTheHighestDistances(): any {
+    this.listOfUsersWithHighestDistances = this.followersOfUser.sort((user1, user2) =>
+      Number(user2.distanceToFollowingUser) - Number(user1.distanceToFollowingUser)
     ).slice(0, this.numberOfFollowersUser);
+    this.loadingList = false;
   }
 }

@@ -8,5 +8,6 @@ import { User } from './../../entities/user';
 })
 
 export class UsersListComponent {
-  @Input() public listOf10Users: Array<User>;
+  @Input() public loadingList: boolean;
+  @Input() public listOfUsersWithHighestDistances: Array<User>;
 }
