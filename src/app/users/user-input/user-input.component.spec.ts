@@ -28,7 +28,26 @@ describe('UserInputComponent', () => {
     comp = fixture.componentInstance;
   });
 
-  it('should be defined', () => {
-    expect(comp).toBeDefined();
+  describe('ngOnInit', () => {
+    beforeEach(() => {
+      spyOn(comp, 'createUserForm');
+    });
+
+    it('should call createUserForm', () => {
+      comp.ngOnInit();
+      expect(comp.createUserForm).toHaveBeenCalled();
+    });
+  });
+
+  describe('createUserForm()', () => {
+    it('should return formGroup', () => {
+      expect(comp.createUserForm().controls.name).toBeDefined();
+    });
+  });
+
+  describe('submitUserForm()', () => {
+    it('should set', () => {
+
+    });
   });
 });

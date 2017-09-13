@@ -1,0 +1,23 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Formularz nazwy użytkownika GitHub</h3>
+  </div>
+  <div class="box-body">
+    <form class="form-horizontal" [formGroup]="userForm">
+      <div class="form-group" [ngClass]="{'has-error': userForm.controls.name.invalid && userForm.controls.name.dirty }">
+        <label for="input-name" class="col-sm-2 control-label">Nazwa użytkownika</label>
+
+        <div class="col-sm-10">
+          <input formControlName="name" type="text" class="form-control" id="input-name" placeholder="Nazwa użytkownika">
+          <span class="help-block" *ngIf="userForm.controls.name.errors?.required && userForm.controls.name.dirty">Wprowadź nazwę</span>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="box-footer">
+    <button type="submit" class="btn btn-info pull-right" (click)="submitUserForm($event)" [ngClass]="{'disabled': userForm.invalid}">
+      <span *ngIf="!userFormLoading">Wyślij</span>
+      <i *ngIf="userFormLoading" class="fa fa-circle-o-notch fa-spin fa-fw"></i>
+    </button>
+  </div>
+</div>

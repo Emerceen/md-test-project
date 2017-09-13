@@ -15,11 +15,19 @@ export class UsersDataService {
     private apiURLs: ApiURLs
   ) { }
 
-  getUserDetails(userName: string): Observable<User> {
-    const reqURL = `AddUser/`;
+  getUserDetails(userLogin: string): Observable<User> {
+    const reqURL = userLogin;
     const url = this.apiURLs.getGitHubURL(reqURL);
 
     return this.httpClient.get<UserInterface>(url)
       .map(user => User.fromData(user));
+  }
+
+  getFollowersOfUser(userLogin: string): Observable<Array<User>> {
+    const reqURL = `${userLogin}/followers`;
+    const url = this.apiURLs.getGitHubURL(reqURL);
+
+    return this.httpClient.get<Array<UserInterface>>(url)
+      .map(users => users.map(user => User.fromData(user)));
   }
 }
