@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import 'rxjs/add/operator/takeWhile';
 
 import { Communication } from './../data-services/communication.service';
@@ -9,7 +9,7 @@ import { User } from './../entities/user';
   templateUrl: 'users.component.html'
 })
 
-export class UsersComponent {
+export class UsersComponent implements OnDestroy {
   public user: User;
   public numberOfFollowersUser: number = 10;
   public listOfUsersWithHighestDistances: Array<User>;
@@ -34,6 +34,10 @@ export class UsersComponent {
   constructor(
     private communication: Communication
   ) { }
+
+  ngOnDestroy(): void {
+    this.alive = false;
+  }
 
   getLocationOfFollowers(): void {
     this.usersIds = [];

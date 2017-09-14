@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, Output, } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import 'rxjs/add/operator/takeWhile';
 
@@ -11,7 +11,7 @@ import { User } from './../../entities/user';
   templateUrl: 'user-input.component.html'
 })
 
-export class UserInputComponent implements OnInit {
+export class UserInputComponent implements OnInit, OnDestroy {
   public userForm: FormGroup;
 
   @Input() public loadingList: boolean;
@@ -31,6 +31,10 @@ export class UserInputComponent implements OnInit {
 
   ngOnInit(): void {
     this.userForm = this.createUserForm();
+  }
+
+  ngOnDestroy(): void {
+    this.alive = false;
   }
 
   createUserForm(): FormGroup {
