@@ -14,7 +14,6 @@ export class UsersComponent implements OnDestroy {
   public numberOfFollowersUser: number = 10;
   public listOfUsersWithHighestDistances: Array<User>;
   public loadingList: boolean;
-  private usersIds: Array<number>;
 
   private _followersOfUser: Array<User>;
   private alive: boolean = true;
@@ -40,43 +39,19 @@ export class UsersComponent implements OnDestroy {
   }
 
   getLocationOfFollowers(): void {
-    this.usersIds = [];
-    const length = this._followersOfUser.length;
     if (this._followersOfUser.length > 0) {
-      this._followersOfUser.map(
-        (followerUser, index) => {
-          this.communication.userDataService.getUserDetails(followerUser.login)
-            .takeWhile(() => this.alive)
-            .subscribe(
-            user => {
-              followerUser.location = user.location;
-              if (followerUser.location) {
-                this.communication.distanceDataService.getDistanceBetweenLocations(this.user.location, followerUser.location)
-                  .takeWhile(() => this.alive)
-                  .subscribe(
-                  locations => {
-                    followerUser.distanceToFollowingUser = locations.distance;
-                    this.usersIds.push(user.id);
-                    if (this.usersIds.length === length) {
-                        this.getUsersWithTheHighestDistances();
-                    }
-                  }
-                  );
-              } else {
-                this.usersIds.push(user.id);
-                this.loadingList = false;
-              }
-            }
-            );
-        }
-      );
+      this.communication.userDataService.getFollowersWithDistance(this._followersOfUser, this.user.location)
+        .takeWhile(() => this.alive)
+        .subscribe(data => {
+          this.getUsersWithTheHighestDistances(data);
+        });
     } else {
       this.loadingList = false;
     }
   }
 
-  getUsersWithTheHighestDistances(): any {
-    this.listOfUsersWithHighestDistances = this.followersOfUser.sort((user1, user2) =>
+  getUsersWithTheHighestDistances(followers: Array<User>): any {
+    this.listOfUsersWithHighestDistances = followers.sort((user1, user2) =>
       Number(user2.distanceToFollowingUser) - Number(user1.distanceToFollowingUser)
     ).slice(0, this.numberOfFollowersUser);
     this.loadingList = false;
