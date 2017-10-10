@@ -36,11 +36,7 @@ export class UsersDataService {
     return this.httpClient.get<UserInterface>(url)
       .map(follower => User.fromData(follower))
       .flatMap((follower, index) => {
-        if (follower.location) {
-          return this.distanceDataService.getDistanceBetweenLocations(locationOfUser, follower.location);
-        } else {
-          return Observable.of();
-        }
+        return this.distanceDataService.getDistanceBetweenLocations(locationOfUser, follower.location || '');
       });
   }
 
